@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebSocket STOMP 테스트</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+  </head>
+  <body>
+    <h1>좌석 현황 WebSocket 테스트</h1>
+    <button onclick="connect()">🔌 연결</button>
+    <button onclick="disconnect()">❌ 연결 끊기</button>
+
+    <script>
+      let stompClient = null;
+
+      function connect() {
+        const socket = new SockJS("/ws-sockjs"); // 프로토콜, 도메인 맞게 상대경로 추천
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, () => {
+          console.log("✅ STOMP 연결 성공");
+
+          stompClient.subscribe("/topic/seat-status", (message) => {
+            console.log("📨 좌석 상태 메시지:", message.body);
+          });
+
+          stompClient.send(
+            "/app/select-seat",
+            {},
+            JSON.stringify({
+              userId: "tester",
+              seatId: "A-10",
+            })
+          );
+        });
+      }
+
+      function disconnect() {
+        if (stompClient && stompClient.connected) {
+          stompClient.disconnect(() => {
+            console.log("❌ STOMP 연결 끊김");
+          });
+        } else {
+          console.log("⚠️ 연결되어 있지 않습니다.");
+        }
+      }
+    </script>
+  </body>
+</html>
