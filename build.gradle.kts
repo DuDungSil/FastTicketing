@@ -40,6 +40,9 @@ subprojects {
         // MySQL
         implementation("mysql:mysql-connector-java:8.0.33")
 
+        // Redis
+        implementation ("org.springframework.data:spring-data-redis")
+
         // QueryDSL 설정
         implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
         implementation("com.querydsl:querydsl-core:5.0.0")
