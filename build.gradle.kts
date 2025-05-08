@@ -42,6 +42,7 @@ subprojects {
 
         // Redis
         implementation ("org.springframework.data:spring-data-redis")
+        implementation ("org.redisson:redisson-spring-boot-starter:3.23.5")
 
         // QueryDSL 설정
         implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")

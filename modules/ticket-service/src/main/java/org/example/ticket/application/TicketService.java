@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.example.performance.domain.entity.Seat;
+import org.example.ticket.adapter.out.TicketOpenRepository;
 import org.example.ticket.adapter.out.TicketRepository;
 import org.example.ticket.application.dto.TicketStatusDto;
 import org.example.ticket.domain.entity.Ticket;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -16,7 +18,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class TicketService {
 
+    private final RedissonClient redissonClient;
+    private final RedisTemplate<String, String> redisTemplate;
+
     private final TicketRepository ticketRepository;
+    private final TicketOpenRepository ticketOpenRepository;
 
     // 티켓 생성 ( 좌석 정보 이용 )
     public List<Ticket> generateTickets(List<Seat> seats) {

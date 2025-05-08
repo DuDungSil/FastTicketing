@@ -1,0 +1,6 @@
+배치 처리
+bulk insert
+스레드 관리
+concurrentMap
+synchronized
+분산락?

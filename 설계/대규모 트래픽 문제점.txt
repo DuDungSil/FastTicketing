@@ -1,0 +1,9 @@
+1. 데드 락
+    - Select / update 동시 발생할때
+        => DB replication
+        => Isolation level ( 격리 수준 ) = READ-COMMITED
+        
+
+2. 각종 time out
+3. 결제 내역 불일치 ( 외부 모듈 )
+4. 오토 스케일링 -> 서버 종료, 생성 -> 로그가 사라짐 -> 문제 못 찾음
