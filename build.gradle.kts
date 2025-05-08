@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "3.2.0" 
+    id("org.springframework.boot") version "3.4.2" 
     id("io.spring.dependency-management") version "1.1.4" 
     id("application")
     id("java")
@@ -14,10 +14,15 @@ repositories {
 }
 
 subprojects {
-    apply(plugin = "java") 
-    apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.springframework.boot")
+    apply(plugin = "io.spring.dependency-management")
     apply(plugin = "application")
+    apply(plugin = "java") 
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 
     repositories {
         mavenCentral()
@@ -51,12 +56,6 @@ subprojects {
 application {
     mainClass.set("org.example.App")
 }
-
-// sourceSets {
-//     main {
-//         resources.srcDirs("app/src/main/resources")
-//     }
-// }
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
