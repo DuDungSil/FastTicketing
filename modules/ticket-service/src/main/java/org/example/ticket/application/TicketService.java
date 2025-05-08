@@ -8,6 +8,7 @@ import org.example.ticket.adapter.out.TicketOpenRepository;
 import org.example.ticket.adapter.out.TicketRepository;
 import org.example.ticket.application.dto.TicketStatusDto;
 import org.example.ticket.domain.entity.Ticket;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
