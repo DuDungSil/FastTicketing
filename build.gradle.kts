@@ -34,8 +34,8 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-data-jpa") // JPA
         
         // Lombok
-        implementation("org.projectlombok:lombok")
-        annotationProcessor("org.projectlombok:lombok")
+        compileOnly("org.projectlombok:lombok:1.18.38")
+        annotationProcessor("org.projectlombok:lombok:1.18.38")
 
         // MySQL
         implementation("mysql:mysql-connector-java:8.0.33")
