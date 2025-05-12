@@ -3,4 +3,8 @@ bulk insert
 스레드 관리
 concurrentMap
 synchronized
-분산락?
+
+
+
+분산락
+    티켓팅은 서버를 scale-out 할 가능성이 높으므로 확장성 있는 설계

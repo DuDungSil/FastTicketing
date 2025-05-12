@@ -54,6 +54,7 @@ subprojects {
 
         // 테스트
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        runtimeOnly("com.h2database:h2")
     }
 }
 

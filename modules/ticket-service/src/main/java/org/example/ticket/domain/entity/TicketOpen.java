@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class TicketOpen {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     // FK
@@ -38,6 +39,7 @@ public class TicketOpen {
     @OneToMany(mappedBy = "ticketOpen", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
+    // ==== 비즈니스 로직 ====
     // 생성
     public TicketOpen(Integer scheduleId, LocalDateTime openAt, Integer limitPerUser, OpenType openType, List<Ticket> tickets) {
         this.scheduleId = scheduleId;

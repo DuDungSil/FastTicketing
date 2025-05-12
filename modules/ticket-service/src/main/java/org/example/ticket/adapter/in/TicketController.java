@@ -20,28 +20,28 @@ public class TicketController {
     // 티켓 예매
     @PostMapping("/reserve")
     public ResponseEntity<String> reserveTickets(@RequestBody TicketRequest request) {
-        ticketService.reserveTickets(request.userId(), request.ticketIds());
+        ticketService.holdingTickets(request.userId(), request.ticketOpenId(), request.ticketIds());
         return ResponseEntity.ok("티켓 예매 성공");
     }
 
     // 티켓 결제
     @PostMapping("/pay")
     public ResponseEntity<String> payTickets(@RequestBody TicketRequest request) {
-        ticketService.payTickets(request.userId(), request.ticketIds());
+        ticketService.reserveTickets(request.userId(), request.ticketOpenId(), request.ticketIds());
         return ResponseEntity.ok("티켓 결제 성공");
     }
 
     // 펜딩 상태 취소
     @PostMapping("/cancel/pending")
     public ResponseEntity<String> cancelPendingTickets(@RequestBody TicketRequest request) {
-        ticketService.cancelPendingTickets(request.userId(), request.ticketIds());
+        ticketService.cancelPendingTickets(request.userId(), request.ticketOpenId(), request.ticketIds());
         return ResponseEntity.ok("티켓 취소 성공");
     }
 
     // 결제 상태 취소
     @PostMapping("/cancel/reserved")
     public ResponseEntity<String> cancelReservedTickets(@RequestBody TicketRequest request) {
-        ticketService.cancelReservedTickets(request.userId(), request.ticketIds());
+        ticketService.cancelReservedTickets(request.userId(), request.ticketOpenId(), request.ticketIds());
         return ResponseEntity.ok("티켓 취소 성공");
     }
 }
