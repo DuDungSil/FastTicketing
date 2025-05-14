@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.example.TicketApplication;
 import org.example.ticket.adapter.out.TicketOpenRepository;
 import org.example.ticket.adapter.out.TicketRepository;
 import org.example.ticket.domain.entity.Ticket;
@@ -20,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
+@SpringBootTest(classes = TicketApplication.class)
 @ActiveProfiles("test")
 class TicketServiceConcurrencyTest {
 

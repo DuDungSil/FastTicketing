@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.example.performance.adapter.out.HallRepository;
 import org.example.performance.adapter.out.VenueRepository;
+import org.example.performance.application.dto.HallDto;
 import org.example.performance.domain.entity.Hall;
 import org.example.performance.domain.entity.Seat;
 import org.example.performance.domain.entity.Venue;
@@ -30,6 +31,17 @@ public class HallService {
         Hall newHall = new Hall(name, venue, seats);
 
         hallRepository.save(newHall);
+    }
+
+    public List<HallDto> getHallsByVenue(Integer venueId) {
+        List<Hall> halls = hallRepository.findByVenueId(venueId);
+        return halls.stream()
+                .map(HallDto::from)
+                .toList();
+    }
+
+    public void deleteHall(Integer id) {
+        hallRepository.deleteById(id);
     }
 
 }

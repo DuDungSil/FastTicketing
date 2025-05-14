@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/queue")
+@RequestMapping("/api/queue")
 public class QueueController {
 
     private final QueueService queueService;

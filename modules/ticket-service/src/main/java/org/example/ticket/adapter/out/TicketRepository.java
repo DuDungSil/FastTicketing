@@ -19,13 +19,13 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     int countByUserIdAndTicketOpenId(Long userId, Integer ticketOpenId);
 
-    @Query("SELECT t FROM Ticket t WHERE t.status = 'PENDING' AND t.updatedAt <= :cutoff")
+    @Query("SELECT t FROM Ticket t WHERE t.status = 'PENDING' AND t.pendingAt <= :cutoff")
     List<Ticket> findPendingOlderThan(@Param("cutoff") LocalDateTime cutoff);
-
-    @Query("SELECT t FROM Ticket t WHERE t.status = 'CANCELED' AND t.reservedAt <= :cutoff")
-    List<Ticket> findCanceledBefore(@Param("cutoff") LocalDateTime cutoff);
 
     @Query("SELECT t FROM Ticket t WHERE t.status = 'HELD' AND t.heldAt <= :cutoff")
     List<Ticket> findOverdueHeldTickets(@Param("cutoff") LocalDateTime cutoff);
+
+    @Query("SELECT t FROM Ticket t WHERE t.status = 'CANCELED' AND t.reservedAt <= :cutoff")
+    List<Ticket> findCanceledBefore(@Param("cutoff") LocalDateTime cutoff);
 
 }

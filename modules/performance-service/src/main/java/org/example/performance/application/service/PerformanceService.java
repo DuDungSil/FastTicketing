@@ -1,6 +1,9 @@
 package org.example.performance.application.service;
 
+import java.util.List;
+
 import org.example.performance.adapter.out.PerformanceRepository;
+import org.example.performance.application.dto.PerformanceDto;
 import org.example.performance.domain.entity.Performance;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,17 @@ public class PerformanceService {
 
         // title 중복 체크 ?
         performanceRepository.save(performance);
+    }
+
+    public List<PerformanceDto> getAllPerformances() {
+        return performanceRepository.findAll()
+                .stream()
+                .map(PerformanceDto::from)
+                .toList();
+    }
+
+    public void deletePerformance(Integer id) {
+        performanceRepository.deleteById(id);
     }
 
 }

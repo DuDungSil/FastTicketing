@@ -1,10 +1,13 @@
 package org.example.performance.application.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.example.performance.adapter.out.HallRepository;
 import org.example.performance.adapter.out.PerformanceRepository;
 import org.example.performance.adapter.out.PerformanceScheduleRepository;
+import org.example.performance.application.dto.ScheduleDetailDto;
+import org.example.performance.application.dto.ScheduleDto;
 import org.example.performance.domain.entity.Hall;
 import org.example.performance.domain.entity.Performance;
 import org.example.performance.domain.entity.PerformanceSchedule;
@@ -29,6 +32,27 @@ public class ScheduleService {
         PerformanceSchedule performanceSchedule = new PerformanceSchedule(performance, hall, startTime, endTime);
 
         performanceScheduleRepository.save(performanceSchedule);
+    }
+
+    public List<ScheduleDto> getSchedulesByPerformance(Integer performanceId) {
+        Performance performance = performanceRepository.findById(performanceId).orElseThrow();
+        return performance.getSchedules().stream()
+                .map(ScheduleDto::from)
+                .toList();
+    }
+
+    public List<ScheduleDetailDto> getAllSchedulesDetails() {
+        List<PerformanceSchedule> schedules = performanceScheduleRepository.findAllWithPerformanceAndHall();
+        List<ScheduleDetailDto> dtos = schedules.stream()
+                .map(ScheduleDetailDto::from)
+                .toList();
+
+        return dtos;
+    }
+
+    public void deleteSchedule(Integer id) {
+        // 성능을 위해 직접 레포지토리에서 삭제
+        performanceScheduleRepository.deleteById(id);
     }
 
 }

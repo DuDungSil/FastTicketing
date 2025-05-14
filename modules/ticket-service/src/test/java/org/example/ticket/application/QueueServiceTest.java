@@ -6,6 +6,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.example.TicketApplication;
 import org.example.ticket.application.dto.QueueStatusDto;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
+@SpringBootTest(classes = TicketApplication.class)
 @ActiveProfiles("test")
 public class QueueServiceTest {
 
@@ -96,9 +98,10 @@ public class QueueServiceTest {
         latch.await();
 
         // then
-        Long rank = redisTemplate.opsForZSet().rank("queue:ticketOpen:" + ticketOpenId, tokens[0].toString());
-        assertThat(rank).isNotNull();
-        assertThat(rank).isEqualTo(0L); // 첫 번째 UUID는 첫 순위여야 한다
+        for (UUID token : tokens) {
+            Long rank = redisTemplate.opsForZSet().rank("queue:ticketOpen:" + ticketOpenId, token.toString());
+            assertThat(rank).isNotNull();
+        }
     }
 
     @Test

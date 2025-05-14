@@ -7,6 +7,7 @@ import org.example.performance.adapter.out.PerformanceScheduleRepository;
 import org.example.performance.domain.entity.PerformanceSchedule;
 import org.example.performance.domain.entity.Seat;
 import org.example.ticket.adapter.out.TicketOpenRepository;
+import org.example.ticket.application.dto.TicketOpenDto;
 import org.example.ticket.domain.entity.Ticket;
 import org.example.ticket.domain.entity.TicketOpen;
 import org.example.ticket.domain.enums.OpenType;
@@ -40,6 +41,17 @@ public class TicketOpenService {
 
         // 티켓 오픈 저장
         ticketOpenRepository.save(newTicketOpen);
+    }
+
+    // 예매 정책 조회
+    public List<TicketOpenDto> getAvailableTicketOpens() {
+        LocalDateTime now = LocalDateTime.now();
+        List<TicketOpen> opens = ticketOpenRepository.findByOpenAtBefore(now);
+        return TicketOpenDto.fromList(opens);
+    }
+
+    public void deleteTicketOpen(Integer id) {
+        ticketOpenRepository.deleteById(id);
     }
 
 }

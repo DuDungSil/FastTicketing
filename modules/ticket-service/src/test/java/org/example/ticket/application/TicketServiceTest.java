@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.example.TicketApplication;
 import org.example.performance.domain.entity.Seat;
 import org.example.ticket.adapter.out.TicketOpenRepository;
 import org.example.ticket.adapter.out.TicketRepository;
@@ -19,9 +20,8 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
+@SpringBootTest(classes = TicketApplication.class)
 class TicketServiceTest {
 
     @Autowired
