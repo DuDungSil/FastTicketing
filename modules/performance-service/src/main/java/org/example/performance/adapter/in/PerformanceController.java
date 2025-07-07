@@ -7,6 +7,7 @@ import org.example.performance.adapter.in.request.ScheduleRequest;
 import org.example.performance.application.dto.PerformanceDto;
 import org.example.performance.application.dto.ScheduleDetailDto;
 import org.example.performance.application.dto.ScheduleDto;
+import org.example.performance.application.dto.SeatDto;
 import org.example.performance.application.service.PerformanceService;
 import org.example.performance.application.service.ScheduleService;
 import org.example.performance.domain.entity.PerformanceSchedule;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -41,7 +43,7 @@ public class PerformanceController {
     public ResponseEntity<String> createPerformancSchedule(
             @PathVariable("performanceId") Integer performanceId,
             @RequestBody ScheduleRequest request) {
-        scheduleService.createSchedule(performanceId, request.hallId(), request.startTime(), request.endTime());
+        scheduleService.createSchedule(performanceId, request.hallId(), request.startTime(), request.endTime(), request.price());
         return ResponseEntity.ok("new performance schedule created.");
     }
 
@@ -73,6 +75,12 @@ public class PerformanceController {
     public ResponseEntity<List<ScheduleDetailDto>> getAllSchedulesDetails() {
         List<ScheduleDetailDto> dtos = scheduleService.getAllSchedulesDetails();
         return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/schedules/{scheduleId}/seats")
+    public ResponseEntity<List<SeatDto>> getSeatsBySchedule(@PathVariable Integer scheduleId) {
+        List<SeatDto> seats = scheduleService.getSeatsByScheduleId(scheduleId);
+        return ResponseEntity.ok(seats);
     }
 
 }

@@ -1,9 +1,7 @@
 package org.example.performance.application.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.example.common.utils.SeatCodeGenUtil;
 import org.example.performance.domain.entity.Seat;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +11,16 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class SeatsGenerateService {
 
-    private final SeatCodeGenUtil seatCodeGenUtil;
-
-    // row, column 기준으로 좌석 코드 생성
+    // 좌석 생성: row (행 개수), column (열 개수)
     public List<Seat> generateSeats(int row, int column) {
-        List<String> seatCodes = seatCodeGenUtil.generateSeatCodeList(row, column);
+        List<Seat> seats = new ArrayList<>();
 
-        List<Seat> seats = seatCodes.stream()
-                .map(code -> new Seat(code))
-                .collect(Collectors.toList());
+        for (int rowIndex = 1; rowIndex <= row; rowIndex++) {
+            for (int colIndex = 1; colIndex <= column; colIndex++) {
+                seats.add(new Seat(rowIndex, colIndex));
+            }
+        }
 
         return seats;
     }
-
 }

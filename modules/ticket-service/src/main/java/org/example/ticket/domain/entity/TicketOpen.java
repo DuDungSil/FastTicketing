@@ -1,6 +1,7 @@
 package org.example.ticket.domain.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.example.ticket.domain.enums.OpenType;
@@ -9,6 +10,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,21 +38,24 @@ public class TicketOpen {
     @Enumerated(EnumType.STRING)
     private OpenType openType;
 
-    @OneToMany(mappedBy = "ticketOpen", cascade = CascadeType.ALL)
-    private List<Ticket> tickets;
+    @OneToMany(mappedBy = "ticketOpen", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Ticket> tickets = new ArrayList<>();
 
     // ==== 비즈니스 로직 ====
     // 생성
-    public TicketOpen(Integer scheduleId, LocalDateTime openAt, Integer limitPerUser, OpenType openType, List<Ticket> tickets) {
-        this.scheduleId = scheduleId;
-        this.openAt = openAt;
-        this.limitPerUser = limitPerUser;
-        this.openType = openType;
-        this.tickets = tickets;
+    public static TicketOpen create(Integer scheduleId, LocalDateTime openAt, Integer limitPerUser, OpenType openType, List<Ticket> tickets) {
+        TicketOpen ticketOpen = new TicketOpen();
+        ticketOpen.scheduleId = scheduleId;
+        ticketOpen.openAt = openAt;
+        ticketOpen.limitPerUser = limitPerUser;
+        ticketOpen.openType = openType;
+        ticketOpen.tickets = tickets;
 
         for (Ticket ticket : tickets) {
-            ticket.setTicketOpen(this);
+            ticket.setTicketOpen(ticketOpen);
         }
+
+        return ticketOpen;
     }
 
 }

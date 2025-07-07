@@ -33,11 +33,14 @@ public class PerformanceSchedule {
 
     private LocalDateTime endTime;
 
+    private Integer price;
+
     // 생성자
-    public PerformanceSchedule(Performance performance, Hall hall, LocalDateTime startTime, LocalDateTime endTime) {
+    public PerformanceSchedule(Performance performance, Hall hall, LocalDateTime startTime, LocalDateTime endTime, int price) {
         this.performance = performance;
         this.hall = hall;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.price = price;
     }
 }

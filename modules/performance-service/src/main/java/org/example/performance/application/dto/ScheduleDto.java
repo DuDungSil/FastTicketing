@@ -8,7 +8,8 @@ public record ScheduleDto(
         Integer id,
         Integer hallId,
         LocalDateTime startTime,
-        LocalDateTime endTime
+        LocalDateTime endTime,
+        int price
         ) {
 
     public static ScheduleDto from(PerformanceSchedule schedule) {
@@ -16,7 +17,8 @@ public record ScheduleDto(
                 schedule.getId(),
                 schedule.getHall().getId(),
                 schedule.getStartTime(),
-                schedule.getEndTime()
+                schedule.getEndTime(),
+                schedule.getPrice()
         );
     }
 }

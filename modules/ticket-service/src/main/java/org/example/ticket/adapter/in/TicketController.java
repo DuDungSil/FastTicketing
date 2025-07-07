@@ -1,47 +1,37 @@
 package org.example.ticket.adapter.in;
 
-import org.example.ticket.adapter.in.request.TicketRequest;
+import java.util.List;
+
+import org.example.ticket.application.TicketOpenService;
 import org.example.ticket.application.TicketService;
+import org.example.ticket.application.dto.TicketOpenDto;
+import org.example.ticket.application.dto.TicketStatusDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/tickets")
 public class TicketController {
 
     private final TicketService ticketService;
+    private final TicketOpenService ticketOpenService;
 
-    // 티켓 예매
-    @PostMapping("/reserve")
-    public ResponseEntity<String> reserveTickets(@RequestBody TicketRequest request) {
-        ticketService.holdingTickets(request.userId(), request.ticketOpenId(), request.ticketIds());
-        return ResponseEntity.ok("티켓 예매 성공");
+    @GetMapping("/status")
+    public ResponseEntity<List<TicketStatusDto>> getTicketStatus(@RequestParam Integer ticketOpenId) {
+        List<TicketStatusDto> statusList = ticketService.getTicketStatus(ticketOpenId);
+        return ResponseEntity.ok(statusList);
     }
 
-    // 티켓 결제
-    @PostMapping("/pay")
-    public ResponseEntity<String> payTickets(@RequestBody TicketRequest request) {
-        ticketService.reserveTickets(request.userId(), request.ticketOpenId(), request.ticketIds());
-        return ResponseEntity.ok("티켓 결제 성공");
+    @GetMapping("/ticket-open")
+    public ResponseEntity<TicketOpenDto> getTicketOpen(@RequestParam Integer ticketOpenId) {
+        TicketOpenDto ticketOpen = ticketOpenService.getTicketOpen(ticketOpenId);
+        return ResponseEntity.ok(ticketOpen);
     }
 
-    // 펜딩 상태 취소
-    @PostMapping("/cancel/pending")
-    public ResponseEntity<String> cancelPendingTickets(@RequestBody TicketRequest request) {
-        ticketService.cancelPendingTickets(request.userId(), request.ticketOpenId(), request.ticketIds());
-        return ResponseEntity.ok("티켓 취소 성공");
-    }
-
-    // 결제 상태 취소
-    @PostMapping("/cancel/reserved")
-    public ResponseEntity<String> cancelReservedTickets(@RequestBody TicketRequest request) {
-        ticketService.cancelReservedTickets(request.userId(), request.ticketOpenId(), request.ticketIds());
-        return ResponseEntity.ok("티켓 취소 성공");
-    }
 }

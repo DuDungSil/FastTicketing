@@ -10,7 +10,8 @@ public record ScheduleDetailDto(
         String venueName,
         String hallName,
         LocalDateTime startTime,
-        LocalDateTime endTime
+        LocalDateTime endTime,
+        Integer price
         ) {
 
     public static ScheduleDetailDto from(PerformanceSchedule s) {
@@ -20,7 +21,8 @@ public record ScheduleDetailDto(
                 s.getHall().getVenue().getName(),
                 s.getHall().getName(),
                 s.getStartTime(),
-                s.getEndTime()
+                s.getEndTime(),
+                s.getPrice()
         );
     }
 }

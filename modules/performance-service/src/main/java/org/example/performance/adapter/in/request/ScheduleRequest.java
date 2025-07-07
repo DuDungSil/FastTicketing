@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 public record ScheduleRequest(
         int hallId,
         LocalDateTime startTime,
-        LocalDateTime endTime) {
+        LocalDateTime endTime,
+        int price
+        ) {
 
 }

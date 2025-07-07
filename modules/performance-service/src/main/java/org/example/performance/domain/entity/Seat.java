@@ -23,11 +23,12 @@ public class Seat {
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
-    private String seatCode;
+    private int rowIndex;
+    private int columnIndex;
 
-    // 생성자
-    public Seat(String seatCode) {
-        this.seatCode = seatCode;
+    public Seat(int rowIndex, int columnIndex) {
+        this.rowIndex = rowIndex;
+        this.columnIndex = columnIndex;
     }
 
     public void setHall(Hall hall) {

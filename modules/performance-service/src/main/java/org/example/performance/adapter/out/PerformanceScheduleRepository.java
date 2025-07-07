@@ -18,4 +18,12 @@ public interface PerformanceScheduleRepository extends JpaRepository<Performance
     """)
     List<PerformanceSchedule> findAllWithPerformanceAndHall();
 
+    @Query("""
+    SELECT ps FROM PerformanceSchedule ps
+    JOIN FETCH ps.hall h
+    JOIN FETCH h.seats
+    WHERE ps.id = :scheduleId
+    """)
+    PerformanceSchedule findByIdWithSeats(Integer scheduleId);
+
 }

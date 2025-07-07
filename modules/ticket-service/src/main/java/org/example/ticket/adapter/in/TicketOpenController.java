@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/ticket-opens")
-public class TicketOpenContoller {
+public class TicketOpenController {
 
     private final TicketOpenService ticketOpenService;
 
@@ -33,9 +33,8 @@ public class TicketOpenContoller {
 
     // 티켓 예매 정보 조회
     @GetMapping
-    public ResponseEntity<List<TicketOpenDto>> getTicketOpens() {
-        List<TicketOpenDto> TicketOpenDtoList = ticketOpenService.getAvailableTicketOpens();
-        return ResponseEntity.ok(TicketOpenDtoList);
+    public ResponseEntity<List<TicketOpenDto>> getAllOpens() {
+        return ResponseEntity.ok(ticketOpenService.getAllTicketOpens());
     }
 
     @DeleteMapping("/{ticketOpenId}")
